@@ -39,15 +39,30 @@ function optThreadsHeaders() {
 
 
 function optChatList() {
+    let chatList = document.querySelector("div.im-recent-list");
+    if (chatList) {
+        chatList.setAttribute("role", "list");
+    }
     for (const elem of document.querySelectorAll("div.im-recent-wrapper")) {
-        elem.setAttribute("role", "region");
-        let label = "Chat ";
-        if (elem.querySelector("div.im-msg-counter")) {
-            label += "Unread ";
+        elem.setAttribute("role", "listitem");
+        let innerElem = elem.querySelector("div.im-recent-item__box");
+        innerElem.setAttribute("role", "link");
+        let label = "";
+        if (unreadElem = elem.querySelector("div.im-msg-counter")) {
+            label += unreadElem.innerHTML + " Unread ";
+        }
+        if (e = elem.querySelector(".im-recent-item__title>span")) {
+            label += e.textContent + ". ";
+        }
+        // if (e = elem.querySelector(".im-recent-item__lastmsg>span")) {
+        //     label += e.textContent + ". ";
+        // }
+        if (e = elem.querySelector(".im-recent-item__lastmsg")) {
+            label += e.textContent + ". ";
         }
         if (elem.querySelector("div.im-msg-seenby")) {
             label += "seen ";
         }
-        elem.setAttribute("aria-label", label);
+        innerElem.setAttribute("aria-label", label);
     }
 }
