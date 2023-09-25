@@ -11,14 +11,11 @@
 // @grant unsafeWindow
 // ==/UserScript==
 
-// Entry point, set timer which runs the main function periodically.
+// Entry point, set timers which run opt functions periodically.
 (function () {
-    unsafeWindow.setInterval(function () {
-        let element = document.querySelector('[role="tab"][tabindex="-1"]');
-        if (element != null) {
-            element.removeAttribute("role");
-        }
-    }, 1000)
+    unsafeWindow.setInterval(optUnread, 2000);
+    unsafeWindow.setInterval(optThreadsHeaders, 2000);
+    unsafeWindow.setInterval(optChatList, 2000);
 })();
 
 
@@ -33,6 +30,7 @@ function optUnread() {
     }
 }
 
+
 function optThreadsHeaders() {
     for (const elem of document.querySelectorAll("div.im-thread-flow__header")) {
         elem.setAttribute("role", "heading");
@@ -46,6 +44,9 @@ function optChatList() {
         let label = "Chat ";
         if (elem.querySelector("div.im-msg-counter")) {
             label += "Unread ";
+        }
+        if (elem.querySelector("div.im-msg-seenby")) {
+            label += "seen ";
         }
         elem.setAttribute("aria-label", label);
     }
