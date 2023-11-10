@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKTeamsOpt
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Applies few accessibility optimizations to Vk Teams interface.
 // @author       Cyrmax
 // @updateURL https://cyrmax.github.io/vkteamsopt
@@ -13,9 +13,10 @@
 
 // Entry point, set timers which run opt functions periodically.
 (function () {
-    unsafeWindow.setInterval(optUnread, 2000);
+    unsafeWindow.setInterval(optUnread, 500);
     unsafeWindow.setInterval(optThreadsHeaders, 2000);
     unsafeWindow.setInterval(optChatList, 2000);
+    unsafeWindow.setInterval(optMessagesList, 500);
 })();
 
 
@@ -64,5 +65,18 @@ function optChatList() {
             label += "seen ";
         }
         innerElem.setAttribute("aria-label", label);
+    }
+}
+
+
+function optMessagesList() {
+    for (const elem of document.querySelectorAll("div.im-chat__messages-wrap")) {
+        elem.setAttribute("role", "list");
+    }
+    for (const elem of document.querySelectorAll("div.imMessage,div.im-message")) {
+        elem.setAttribute("role", "listitem");
+    }
+    for (const elem of document.querySelectorAll("div.im-messages__date")) {
+        elem.setAttribute("role", "heading");
     }
 }
