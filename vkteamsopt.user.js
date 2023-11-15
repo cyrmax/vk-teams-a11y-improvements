@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         VKTeamsOpt
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Applies few accessibility optimizations to Vk Teams interface.
 // @author       Cyrmax
-// @updateURL https://cyrmax.github.io/vkteamsopt
-// @downloadURL https://cyrmax.github.io/vkteamsopt
+// @updateURL https://github.com/cyrmax/vk-teams-a11y-improvements/releases/latest/download/vkteamsopt.user.js
+// @downloadURL https://github.com/cyrmax/vk-teams-a11y-improvements/releases/latest/download/vkteamsopt.user.js
 // @match        https://myteam.mail.ru/webim*
 // @run-at document-start
 // @grant unsafeWindow
