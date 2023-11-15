@@ -1,5 +1,8 @@
 name: Automatic release on every tag
 
+permissions:
+  contents: write
+
 on:
   push:
     tags:
@@ -11,23 +14,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref_name }}
-          draft: false
+          token: ${{ github.token }}
+          files: vkteamsopt.user.js
+          fail_on_unmatched_files: true
           prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./vkteamsopt.user.js
-          asset_name: vkteamsopt.user.js
-          asset_content_type: text/javascript
