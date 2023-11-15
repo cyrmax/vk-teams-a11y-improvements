@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKTeamsOpt
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Applies few accessibility optimizations to Vk Teams interface.
 // @author       Cyrmax
 // @updateURL https://cyrmax.github.io/vkteamsopt
@@ -21,7 +21,7 @@
 
 
 function optUnread() {
-    let elems = document.evaluate('//span[text()="Новые сообщения"]', document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE);
+    let elems = document.evaluate('//span[text()="New messages"]', document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE);
     let elemsArray = [];
     while ((node = elems.iterateNext())) {
         elemsArray.push(node);
@@ -50,7 +50,7 @@ function optChatList() {
         innerElem.setAttribute("role", "link");
         let label = "";
         if (unreadElem = elem.querySelector("div.im-msg-counter")) {
-            label += unreadElem.innerHTML + " Unread ";
+            label += unreadElem.textContent + " Unread ";
         }
         if (e = elem.querySelector(".im-recent-item__title>span")) {
             label += e.textContent + ". ";
