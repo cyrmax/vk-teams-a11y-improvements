@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKTeamsOpt
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  Applies few accessibility optimizations to Vk Teams interface.
 // @author       Cyrmax
 // @updateURL https://github.com/cyrmax/vk-teams-a11y-improvements/releases/latest/download/vkteamsopt.user.js
@@ -11,12 +11,39 @@
 // @grant unsafeWindow
 // ==/UserScript==
 
-// Entry point, set timers which run opt functions periodically.
+// Entry point. Create observer wich reacts to mutations and applies accessibility optimizations.
 (function () {
-    unsafeWindow.setInterval(optUnread, 500);
-    unsafeWindow.setInterval(optThreadsHeaders, 2000);
-    unsafeWindow.setInterval(optChatList, 2000);
-    unsafeWindow.setInterval(optMessagesList, 500);
+    const OBSERVER_CONFIG = { subtree: true, childList: true };
+    const callback = function (_, _) {
+        // Run all opt functions
+        optUnread();
+        optThreadsHeaders();
+        optMessagesList();
+        optChatList();
+    };
+    const observer = new MutationObserver(callback);
+    observer.observe(document.body, OBSERVER_CONFIG);
+    /* Half-finished better code which should work faster
+    const callback = function (mutationsList, observer) {
+        for (const mutation of mutationsList) {
+            if (mutation.type === "childList") {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1) {
+                        // Apply different accessibility fixes depending on the element attributes.
+                        // Code from optUnread function
+                        if (node.tagName == "span" && (node.text.includes("New messages") || node.text.includes("Новые сообщения"))) {
+                            node.setAttribute("role", "heading");
+                        }
+                        // Code from optThreadHeaders
+                        if (node.tagName == "div" && node.classList.contains("im-thread-flow__header")) {
+                            node.setAttribute("role", "heading");
+                        }
+                    }
+                });
+            }
+        }
+    }
+    */
 })();
 
 
