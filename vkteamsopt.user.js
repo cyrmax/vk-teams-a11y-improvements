@@ -102,6 +102,7 @@ function optMessagesList() {
     }
     for (const elem of document.querySelectorAll("div.imMessage,div.im-message")) {
         elem.setAttribute("role", "listitem");
+        elem.setAttribute("tabindex", "0");
     }
     for (const elem of document.querySelectorAll("div.im-messages__date")) {
         elem.setAttribute("role", "heading");
